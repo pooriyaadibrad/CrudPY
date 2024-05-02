@@ -102,7 +102,7 @@ class App(Frame):
             return False
         else:
             return True
-
+            """this is test"""
     def insertTable(self,value):
         self.table.insert('','end',values=[value.id,value.name,value.price,value.quantity])
     def readAll(self):
