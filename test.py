@@ -1,15 +1,6 @@
-class product():
+list=[]
 
-    id =0
-    name = ''
-    price = ''
-    quantity = ''
+print(len(list))
 
-    def __init__(self, name='', price=0,quantity=0):
-        self.name = name
-        self.price = price
-        self.quantity = quantity
-
-p=product()
-
-print(p.__class__.__name__)
+list.append(4)
+print(len(list))

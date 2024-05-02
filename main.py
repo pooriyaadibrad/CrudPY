@@ -92,8 +92,16 @@ class App(Frame):
         test=product1.__class__.__name__
         messagebox.showinfo("Register",str(test))
     def Register(self,value):
-        session.add(value)
-        session.commit()
+        result=self.exist(value)
+        if result==False:
+            session.add(value)
+            session.commit()
+    def exist(self,value):
+        result=session.query(product).filter_by(name=value.name).filter_by(price=value.price).filter_by(quantity=value.quantity).all()
+        if len(result)==0:
+            return False
+        else:
+            return True
     def insertTable(self,value):
         self.table.insert('','end',values=[value.id,value.name,value.price,value.quantity])
     def readAll(self):
