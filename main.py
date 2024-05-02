@@ -63,6 +63,10 @@ class App(Frame):
         self.buttondelete=Button(self.master,text="Delete")
         self.buttondelete.bind("<Button-1>",self.onClickDelete)
         self.buttondelete.place(x=200,y=120)
+
+        self.buttonUpdate=Button(self.master,text="Update")
+        self.buttonUpdate.bind("<Button-1>", self.onClickUpdate)
+        self.buttonUpdate.place(x=80,y=200)
     def lable(self):
         self.lableName=Label(self.master,text="Name")
         self.lableName.place(x=30,y=10)
@@ -122,10 +126,9 @@ class App(Frame):
         select = self.table.selection()
         if select != ():
             id = self.table.item(select)['values'][0]
-            alldata=self.readAll()
-            for data in alldata:
-                if data.id==id:
-                    session.delete(data)
+            data=self.reedById(id)
+            session.delete(data)
+            session.commit()
             self.table.delete(select)
     def selection(self,e):
         select = self.table.selection()
@@ -134,6 +137,23 @@ class App(Frame):
             self.TxtName.set(data[1])
             self.TxtPrice.set(data[2])
             self.TxtQuantity.set(data[3])
+    def reedById(self,id):
+
+        return session.query(product).filter_by(id=id).first()
+    def onClickUpdate(self,e):
+        select = self.table.selection()
+        if select != ():
+            product1 = product(name=self.textName.get(), price=int(self.textPrice.get()),
+                               quantity=int(self.textQuantity.get()))
+            id=self.table.item(select)['values'][0]
+
+            data=self.reedById(product1, id)
+
+            data.name=product1.name
+            data.price=product1.price
+            data.quantity=product1.quantity
+            session.commit()
+            self.Load()
     def VariableCreate(self):
         self.TxtName=StringVar()
         self.TxtPrice=StringVar()
